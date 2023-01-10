@@ -28,7 +28,7 @@ export default function HomeScreen() {
     <ProductModal modalVisible={modalVisible} dismissModal={dismissProductHandler} product={procuctView}/>
     <View style={styles.screenBg}>
     <View style={styles.pageContainer}>
-    <FlatList data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2}/>
+    <FlatList style={{width:'100%'}} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2}/>
       
     </View>
     </View>
