@@ -3,11 +3,14 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import HomeScreen from './screens/HomeScreen';
 
 import Header from './components/Header';
 import LoginPage from './screens/LoginPage';
+import MyColors from './constants/colors';
+import Chat from './screens/Chat';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,10 +35,33 @@ export default function App() {
     <Tab.Navigator
     screenOptions={{
       header: () => {return <Header/>},
-     }}>
+      tabBarStyle: {
+        backgroundColor: MyColors.grey800,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        position:'absolute',
+        overflow:'hidden',
+      paddingTop:10},
+      tabBarActiveTintColor:MyColors.orange,
+     }} 
+     
+     
+     >
       <Tab.Screen name="Home" component={HomeStackScreen} 
+      options={{
+        tabBarIcon: ({color, size}) => (<MaterialIcon name="home" color={color} size={size}/>)
+      }}
       />
-      <Tab.Screen name="Login" component={LoginPage} />
+      <Tab.Screen name="Chat" component={Chat} 
+      options={{
+        tabBarIcon: ({color, size}) => (<MaterialIcon name="chat" color={color} size={size}/>)
+      }}
+      />
+      <Tab.Screen name="Login" component={LoginPage} 
+      options={{
+        tabBarIcon: ({color, size}) => (<MaterialIcon name="person" color={color} size={size}/>)
+      }}
+      />
     </Tab.Navigator>
     </NavigationContainer>
     
@@ -49,5 +75,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  tabStyle:{
+    backgroundColor: MyColors.grey800,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    overflow:'hidden'
   },
 });
