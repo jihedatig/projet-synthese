@@ -4,8 +4,11 @@ import MyColors from '../constants/colors'
 import Product from '../components/Product'
 import Produits from '../constants/DummyBDtest'
 import ProductModal from '../components/ProductModal'
+import { useSelector, useDispatch } from 'react-redux';
+import ProductList from '../components/ProductList'
 
 export default function HomeScreen() {
+    const affichage = useSelector(state => state.affichage);
     const[modalVisible, setModalVisible]=useState(false);
     const[procuctView, setProductView] = useState({
         nomProduit:'',
@@ -28,8 +31,11 @@ export default function HomeScreen() {
     <ProductModal modalVisible={modalVisible} dismissModal={dismissProductHandler} product={procuctView}/>
     <View style={styles.screenBg}>
     <View style={styles.pageContainer}>
-    <FlatList style={{width:'100%'}} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2}/>
-      
+        { affichage ?
+    <FlatList key={'_'} style={{width:'100%'}} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1}/>
+            :
+    <FlatList key={'#'} style={{width:'100%'}} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2}/>
+        }
     </View>
     </View>
     </>

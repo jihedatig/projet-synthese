@@ -9,7 +9,7 @@ export default function Product({nomProduit, prix, image, onPress, details}) {
         <Pressable onPress={onPress.bind(this,nomProduit, prix, image, details)} >
             <Image style={styles.image} source={image}/>
             <Text>{nomProduit}</Text>
-            <Text>{prix}</Text>
+            <Text>{prix} $</Text>
         </Pressable>
      
     </View>

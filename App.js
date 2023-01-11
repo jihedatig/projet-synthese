@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 import HomeScreen from './screens/HomeScreen';
 
@@ -27,7 +29,7 @@ function HomeStackScreen() {
 }
 export default function App() {
   return (
-    <>
+    <Provider store={store}>
     <StatusBar style='light'/>
 
     
@@ -65,7 +67,7 @@ export default function App() {
     </Tab.Navigator>
     </NavigationContainer>
     
-    </>
+    </Provider>
   );
 }
 

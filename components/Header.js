@@ -1,15 +1,28 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import React, { useState } from 'react'
 import MyColors from '../constants/colors';
+import IconBtn from './IconBtn';
+import ImgPath from '../constants/ImgPath';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const affichage = useSelector(state => state.affichage);
+  // const [affichage,setAffichage] = useState(true);
+  function changeAffichage(){
+    dispatch({type: 'toggleAffichage'})
+  }
   return (
     <View style={styles.header}>
               
               <Image style={styles.image} source={require("../assets/GGLogo.png")} />
               <View style={styles.headerIconsContainer}>
-                <Image style={styles.icons} source={require("../assets/Profile.png")} />
-                <Image style={styles.icons} source={require("../assets/Cart.png")} />
+                <Pressable onPress={changeAffichage}>
+                  <IconBtn>{affichage? ImgPath.gridView : ImgPath.listView }</IconBtn>
+                </Pressable>
+                
+                <IconBtn>{ImgPath.cart}</IconBtn>
+                
               </View>
     </View>
   )
