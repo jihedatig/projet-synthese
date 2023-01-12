@@ -32,9 +32,9 @@ export default function HomeScreen() {
     <View style={styles.screenBg}>
     <View style={styles.pageContainer}>
         { affichage ?
-    <FlatList key={'L'} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit;}}/>
+    <FlatList key={'L'} contentContainerStyle={{justifyContent:'center', alignItems:'center',}} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit;}}/>
             :
-    <FlatList key={'G'} style={styles.productsList} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2} keyExtractor={(item, index) =>{return 'G'+item.idproduit;}}/>
+    <FlatList key={'G'} contentContainerStyle={{justifyContent:'center', alignItems:'center',}} style={styles.productsList} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2} keyExtractor={(item, index) =>{return 'G'+item.idproduit;}}/>
         }
     </View>
     </View>
