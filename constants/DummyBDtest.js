@@ -54,7 +54,7 @@ const Produits = [
     idSousCategorie: 1,
 },
 {
-    idproduit:6,
+    idproduit:7,
     image: require("../assets/dell.png"),
     nomProduit: 'Portable Asus',
     details: 'example de details',
@@ -63,7 +63,7 @@ const Produits = [
     idSousCategorie: 1,
 },
 {
-    idproduit:6,
+    idproduit:8,
     image: require("../assets/asus.png"),
     nomProduit: 'Portable Asus',
     details: 'example de details',
@@ -72,7 +72,7 @@ const Produits = [
     idSousCategorie: 1,
 },
 {
-    idproduit:6,
+    idproduit:9,
     image: require("../assets/macbook.png"),
     nomProduit: 'Portable Asus',
     details: 'example de details',
@@ -81,7 +81,7 @@ const Produits = [
     idSousCategorie: 1,
 },
 {
-    idproduit:6,
+    idproduit:10,
     image: require("../assets/macbook.png"),
     nomProduit: 'Portable Asus',
     details: 'example de details',
