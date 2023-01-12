@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
         borderTopEndRadius:20,
         padding:10,
         overflow:'hidden',
+        justifyContent:'center',
+        alignItems:'center',
     },
     productsList:{
         flex:1,
