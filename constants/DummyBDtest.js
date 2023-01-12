@@ -52,5 +52,42 @@ const Produits = [
     prix: 950.99,
     fournisseur: 'HP',
     idSousCategorie: 1,
-}]
+},
+{
+    idproduit:6,
+    image: require("../assets/dell.png"),
+    nomProduit: 'Portable Asus',
+    details: 'example de details',
+    prix: 950.99,
+    fournisseur: 'HP',
+    idSousCategorie: 1,
+},
+{
+    idproduit:6,
+    image: require("../assets/asus.png"),
+    nomProduit: 'Portable Asus',
+    details: 'example de details',
+    prix: 950.99,
+    fournisseur: 'HP',
+    idSousCategorie: 1,
+},
+{
+    idproduit:6,
+    image: require("../assets/macbook.png"),
+    nomProduit: 'Portable Asus',
+    details: 'example de details',
+    prix: 950.99,
+    fournisseur: 'HP',
+    idSousCategorie: 1,
+},
+{
+    idproduit:6,
+    image: require("../assets/macbook.png"),
+    nomProduit: 'Portable Asus',
+    details: 'example de details',
+    prix: 950.99,
+    fournisseur: 'HP',
+    idSousCategorie: 1,
+}
+]
 export default Produits;
