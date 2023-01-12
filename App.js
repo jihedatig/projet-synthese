@@ -13,6 +13,7 @@ import Header from './components/Header';
 import LoginPage from './screens/LoginPage';
 import MyColors from './constants/colors';
 import Chat from './screens/Chat';
+import Connexion from './screens/Connexion';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,7 +60,7 @@ export default function App() {
         tabBarIcon: ({color, size}) => (<MaterialIcon name="chat" color={color} size={size}/>)
       }}
       />
-      <Tab.Screen name="Login" component={LoginPage} 
+      <Tab.Screen name="Connexion" component={Connexion} 
       options={{
         tabBarIcon: ({color, size}) => (<MaterialIcon name="person" color={color} size={size}/>)
       }}

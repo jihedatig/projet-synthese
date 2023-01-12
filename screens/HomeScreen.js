@@ -32,9 +32,9 @@ export default function HomeScreen() {
     <View style={styles.screenBg}>
     <View style={styles.pageContainer}>
         { affichage ?
-    <FlatList key={'_'} style={{width:'100%'}} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1}/>
+    <FlatList key={'L'} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit;}}/>
             :
-    <FlatList key={'#'} style={{width:'100%'}} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2}/>
+    <FlatList key={'G'} style={styles.productsList} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2} keyExtractor={(item, index) =>{return 'G'+item.idproduit;}}/>
         }
     </View>
     </View>
@@ -54,5 +54,10 @@ const styles = StyleSheet.create({
         borderTopEndRadius:20,
         padding:10,
         overflow:'hidden',
+    },
+    productsList:{
+        flex:1,
+        width:'100%',
+
     }
 })

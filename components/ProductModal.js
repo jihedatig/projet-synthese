@@ -16,8 +16,8 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
       <View style={styles.productDetailsContainer}>
         <Text style={styles.titre}>{product.nomProduit}</Text>
         <View style={styles.eval}>
-          {[...Array(evaluation)].map((star) =>(<MaterialIcon name="star" color={MyColors.orange} size={16}/>))}
-          {[...Array(5-evaluation)].map((star) =>(<MaterialIcon name="star" color={MyColors.orange200} size={16}/>))}
+          {[...Array(evaluation)].map((star,index) =>(<MaterialIcon key={'A'+index} name="star" color={MyColors.orange} size={16}/>))}
+          {[...Array(5-evaluation)].map((star,index) =>(<MaterialIcon key={'I'+index} name="star" color={MyColors.orange200} size={16}/>))}
         </View>
         <Text>{product.prix} $</Text>
         <Text>{product.details}</Text>
