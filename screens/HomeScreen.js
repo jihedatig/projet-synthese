@@ -1,14 +1,20 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native'
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 import MyColors from '../constants/colors'
 import Product from '../components/Product'
 import Produits from '../constants/DummyBDtest'
 import ProductModal from '../components/ProductModal'
 import { useSelector, useDispatch } from 'react-redux';
 import ProductList from '../components/ProductList'
+import {affichageActions} from '../store/store'
+
+
 
 export default function HomeScreen() {
+
     const affichage = useSelector(state => state.affichage);
+    
+
     const[modalVisible, setModalVisible]=useState(false);
     const[procuctView, setProductView] = useState({
         nomProduit:'',
@@ -32,7 +38,7 @@ export default function HomeScreen() {
     <View style={styles.screenBg}>
     <View style={styles.pageContainer}>
         { affichage ?
-    <FlatList key={'L'} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit;}}/>
+    <FlatList key={'L'} contentContainerStyle={{justifyContent:'center',width:'105%'}} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit;}}/>
             :
     <FlatList key={'G'} contentContainerStyle={{justifyContent:'center', alignItems:'center',}} style={styles.productsList} data={Produits} renderItem={(itemData) => <Product nomProduit={itemData.item.nomProduit} prix={itemData.item.prix} image={itemData.item.image} details={itemData.item.details} onPress={viewProductHandler}/>} numColumns={2} keyExtractor={(item, index) =>{return 'G'+item.idproduit;}}/>
         }
@@ -56,6 +62,7 @@ const styles = StyleSheet.create({
         overflow:'hidden',
         justifyContent:'center',
         alignItems:'center',
+        paddingBottom:70,
     },
     productsList:{
         flex:1,

@@ -21,7 +21,7 @@ export default function ConnexionModal({modalVisible, dismissModal, render}) {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:MyColors.orange200,
+        backgroundColor:MyColors.grey400,
         paddingTop:40
     }
 })

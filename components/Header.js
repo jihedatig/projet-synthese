@@ -1,23 +1,27 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MyColors from '../constants/colors';
 import IconBtn from './IconBtn';
 import ImgPath from '../constants/ImgPath';
 import { useSelector, useDispatch } from 'react-redux';
+import {affichageActions} from '../store/store'
 
 export default function Header() {
   const dispatch = useDispatch();
-  const affichage = useSelector(state => state.affichage);
-  // const [affichage,setAffichage] = useState(true);
+  
+  const affichage = useSelector((state) => state.affichage);
+  
+  
+
   function changeAffichage(){
-    dispatch({type: 'toggleAffichage'})
+    dispatch(affichageActions.toggleAffichage())
   }
   return (
     <View style={styles.header}>
               
               <Image style={styles.image} source={require("../assets/GGLogo.png")} />
               <View style={styles.headerIconsContainer}>
-                <Pressable onPress={changeAffichage}>
+                  <Pressable onPress={changeAffichage}>
                   <IconBtn>{affichage? ImgPath.gridView : ImgPath.listView }</IconBtn>
                 </Pressable>
                 

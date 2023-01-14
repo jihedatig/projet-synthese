@@ -1,10 +1,15 @@
-import { StyleSheet, Text, View, Image, Modal, Button } from 'react-native'
+import { StyleSheet, Text, View, Image, Modal, Button, Alert } from 'react-native'
 import React, { useState } from 'react'
 import MyColors from '../constants/colors'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Quantity from './Quantity';
+import Btn from './Btn';
 
 export default function ProductModal({modalVisible, dismissModal, product}) {
   const [evaluation, setEvaluation] = useState(2);
+  function confirmDialogue(){
+    Alert.alert('Produit: '+ product.nomProduit +' ajouté au panier')
+  }
  
   return (
     <Modal 
@@ -13,16 +18,26 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
     <View style={styles.productModal}>
       <Button title='Fermer' onPress={dismissModal} color='#060'/>
       <Image style={styles.image} source={product.image}/>
-      <View style={styles.productDetailsContainer}>
-        <Text style={styles.titre}>{product.nomProduit}</Text>
-        <View style={styles.eval}>
-          {[...Array(evaluation)].map((star,index) =>(<MaterialIcon key={'A'+index} name="star" color={MyColors.orange} size={16}/>))}
-          {[...Array(5-evaluation)].map((star,index) =>(<MaterialIcon key={'I'+index} name="star" color={MyColors.orange200} size={16}/>))}
-        </View>
-        <Text>{product.prix} $</Text>
-        <Text>{product.details}</Text>
+      <View style={styles.spacer}>
+        <View style={styles.productDetailsContainer}>
+          <Text style={styles.titre}>{product.nomProduit}</Text>
+          <View style={styles.topcontainer}>
+          <View>
+            <View style={styles.eval}>
+              {[...Array(evaluation)].map((star,index) =>(<MaterialIcon key={'A'+index} name="star" color={MyColors.orange} size={16}/>))}
+              {[...Array(5-evaluation)].map((star,index) =>(<MaterialIcon key={'I'+index} name="star" color={MyColors.orange200} size={16}/>))}
+            </View>
+            <Text>{product.prix} $</Text>
+          <Text style={styles.details}>{product.details}</Text>
+          </View>
+          <Quantity/>
+          </View>
+          <View style={styles.btnContainer}>
+        <Btn text={'Ajouter au panier'} icon='shopping-cart' color={MyColors.orange} tcolor='#FFF' onPress={confirmDialogue}/>
       </View>
-
+        </View>
+      
+      </View>
     </View>
     </Modal>
   )
@@ -43,9 +58,7 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:10,
     backgroundColor:'#FFF',
-    borderTopStartRadius:20,
-    borderTopEndRadius:20,
-    overflow:'hidden'
+    
   },
   titre:{
     fontSize:24,
@@ -54,5 +67,30 @@ const styles = StyleSheet.create({
   },
   eval:{
     flexDirection:'row',
+  },
+  topcontainer:{
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+  spacer:{
+    flex:1,
+    alignContent:'space-between',
+    justifyContent:'center',
+    paddingBottom:10,
+    backgroundColor:'#FFF',
+    borderTopStartRadius:20,
+    borderTopEndRadius:20,
+    overflow:'hidden'
+    
+  },
+  btnContainer:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center'
+    
+  },
+  details:{
+    marginTop:20,
+    fontSize:16
   }
 })

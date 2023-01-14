@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Btn from '../components/Btn'
 import MyColors from '../constants/colors'
 import ConnexionModal from '../components/ConnexionModal';
+import { useSelector, useDispatch } from 'react-redux';
+import {affichageActions} from '../store/store'
 
 export default function Connexion() {
+    
+
     const[modalVisible, setModalVisible]=useState(false);
     const[compRender, setCompRender]=useState(false);
     
@@ -27,9 +31,9 @@ export default function Connexion() {
     <View style={styles.screenBg}>
     <View style={styles.container}>
         <Text style={styles.title}>Connexion</Text>
-      <Btn text={'Se connecter'} icon='person' onPress={connectHandler.bind(this,'connect')}/>
-      <Btn text={"S'inscrire"} icon='edit' onPress={connectHandler.bind(this,'register')}/>
-      <Btn text={"Mot de passe oublié"} icon='vpn-key' onPress={connectHandler}/>
+      <Btn text={'Se connecter'} icon='person' color={MyColors.grey800} tcolor={MyColors.grey400} onPress={connectHandler.bind(this,'connect')}/>
+      <Btn text={"S'inscrire"} icon='edit' color={MyColors.grey800} tcolor={MyColors.grey400} onPress={connectHandler.bind(this,'register')}/>
+      <Btn text={"Mot de passe oublié"} icon='vpn-key' color={MyColors.grey800} tcolor={MyColors.grey400} onPress={connectHandler}/>
     </View>
     </View>
     </>

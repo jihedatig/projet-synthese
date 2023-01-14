@@ -18,10 +18,12 @@ export default function Input({label, placeholder, inputconfig, securedField}) {
 const styles = StyleSheet.create({
     container:{
         paddingHorizontal:'8%',
+        paddingVertical:'2%',
         flexDirection:'row',
         justifyContent:'center',
         alignItems:'center',
-        marginVertical:4
+        marginVertical:4,
+        backgroundColor:MyColors.grey600,
     },
     label:{
         flex:1,

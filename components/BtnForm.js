@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
         height:40,
         padding:10,
         borderRadius:10,
-        backgroundColor: MyColors.green,
+        backgroundColor: MyColors.orange,
         justifyContent: 'space-evenly',
         alignItems:'center',
-        marginVertical:10,
+        marginVertical:30,
         flexDirection:'row',
     },
     btnText:{

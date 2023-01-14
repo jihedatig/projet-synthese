@@ -3,12 +3,15 @@ import React from 'react'
 import MyColors from '../constants/colors'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Btn({text, icon, onPress}) {
+export default function Btn({text, icon, onPress, color, tcolor}) {
+  const btnBg = {backgroundColor:color}
+  const textcolor ={color:tcolor}
+  const iconcolor = tcolor
   return (
     <Pressable onPress={onPress}>
-    <View style={styles.btnContainer}>
-      <MaterialIcon name={icon} color={MyColors.grey400} size={24}/>
-      <Text style={styles.btnText}>{text}</Text>
+    <View style={[styles.btnContainer, btnBg]}>
+      <MaterialIcon name={icon} color={iconcolor} size={24}/>
+      <Text style={[styles.btnText, textcolor]}>{text}</Text>
     </View>
     </Pressable>
   )
@@ -20,7 +23,6 @@ const styles = StyleSheet.create({
         height:40,
         padding:10,
         borderRadius:20,
-        backgroundColor: MyColors.grey800,
         justifyContent: 'space-evenly',
         alignItems:'center',
         marginVertical:10,
