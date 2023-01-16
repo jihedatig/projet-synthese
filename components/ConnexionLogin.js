@@ -4,8 +4,19 @@ import Input from './Input'
 import MyColors from '../constants/colors'
 import BtnForm from './BtnForm'
 import axios from 'axios'
+import {connectActions} from '../store/store'
+import { useDispatch } from 'react-redux'
+
+
+
 
 export default function ConnexionLogin() {
+    
+    const dispatch = useDispatch();
+    
+
+
+
     const[connectClient, setConnectClient] = useState({
         username: '',
         password: ''
@@ -22,9 +33,24 @@ export default function ConnexionLogin() {
     async function submitForm(){
         const endpoint = 'https://ggmarket.alwaysdata.net/login';
        const response = await axios.post(endpoint, connectClient);
+    
+        if(response.data.message === 'Vous êtes connecté'){
+            const endpoint2 = 'https://ggmarket.alwaysdata.net/getRole';
+            const getRole = await axios.post(endpoint2, {idUtilisateur: response.data.data.idUtilisateur});
+            if(getRole.data.message === 'isAdmin'){
+                dispatch(connectActions.roleAdmin())
+                dispatch(connectActions.Authenticated())
+                Alert.alert('Bonjour, ' + getRole.data.data['prenom']);
 
-       Alert.alert(response.data.message);
-       console.log(response.data.message)
+            }else{
+                dispatch(connectActions.Authenticated())
+            }
+            
+        }else{
+            Alert.alert(response.data.message);
+        }
+       
+       console.log(response.data.data)
     }
   return (
     <View style={styles.container}>

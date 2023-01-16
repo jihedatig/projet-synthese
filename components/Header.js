@@ -3,29 +3,36 @@ import React, { useState, useEffect } from 'react'
 import MyColors from '../constants/colors';
 import IconBtn from './IconBtn';
 import ImgPath from '../constants/ImgPath';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import {affichageActions} from '../store/store'
+import {connectActions} from '../store/store'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Header() {
+function Header(props) {
   const dispatch = useDispatch();
   
-  const affichage = useSelector((state) => state.affichage);
-  
-  
 
+  const affichage = useSelector((state) => state.affichage.affichage);
+  
   function changeAffichage(){
     dispatch(affichageActions.toggleAffichage())
+  }
+  function logout(){
+    dispatch(connectActions.logout())
   }
   return (
     <View style={styles.header}>
               
               <Image style={styles.image} source={require("../assets/GGLogo.png")} />
               <View style={styles.headerIconsContainer}>
-                  <Pressable onPress={changeAffichage}>
+                 {props.showOptions? <Pressable onPress={changeAffichage}>
                   <IconBtn>{affichage? ImgPath.gridView : ImgPath.listView }</IconBtn>
+                </Pressable> : null}
+                {props.showLogout?
+                <Pressable onPress={logout}>
+                <MaterialIcon name="logout" color={MyColors.orange} size={30}/>
                 </Pressable>
-                
-                <IconBtn>{ImgPath.cart}</IconBtn>
+                : null}
                 
               </View>
     </View>
@@ -48,7 +55,10 @@ const styles = StyleSheet.create({
     headerIconsContainer:{
         flexDirection:'row',
         justifyContent:'space-evenly', 
-        alignItems:'flex-end',
+        alignContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingEnd:10
         
     },
     icons:{
@@ -57,3 +67,10 @@ const styles = StyleSheet.create({
         margin:10
     }
 })
+function mapStateToProps (state){
+  return{
+    showOptions : state.affichage.showOptions,
+    showLogout : state.connexion.isConnected
+  }
+}
+export default connect(mapStateToProps)(Header);

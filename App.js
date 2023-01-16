@@ -1,22 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from './store/store';
+
+import IconBtn from './components/IconBtn';
+import ImgPath from './constants/ImgPath';
 
 import HomeScreen from './screens/HomeScreen';
 
 import Header from './components/Header';
-import LoginPage from './screens/LoginPage';
+
 import MyColors from './constants/colors';
 import Chat from './screens/Chat';
 import Connexion from './screens/Connexion';
+import UserProfile from './screens/UserProfile';
+import Panier from './screens/Panier';
+import OutilsGestion from './screens/OutilsGestion';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function Profile() {
+
+  const gestion = useSelector((state) => state.connexion.isAdmin);
+  
+  
+  return (
+    <Stack.Navigator>
+        <Stack.Screen name='Connexion' component={Connexion}
+        options={{
+          headerShown:false
+        }}
+        />
+        <Stack.Screen name='userProfile' component={UserProfile}
+        options={{
+          headerShown:false
+        }}
+        />
+        {gestion&&<Stack.Screen name='outils' component={OutilsGestion}
+        options={{
+          headerShown:true
+        }}
+        />}
+      </Stack.Navigator>
+  );
+}
+
 function HomeStackScreen() {
   return (
     <Stack.Navigator>
@@ -28,12 +61,12 @@ function HomeStackScreen() {
       </Stack.Navigator>
   );
 }
-export default function App() {
+function AppWrapp(){
   return (
-    <Provider store={store}>
-    <StatusBar style='light'/>
+  <>
+      <StatusBar style='light'/>
 
-    
+        
     <NavigationContainer>
     <Tab.Navigator
     screenOptions={{
@@ -46,10 +79,10 @@ export default function App() {
         overflow:'hidden',
       paddingTop:10},
       tabBarActiveTintColor:MyColors.orange,
-     }} 
-     
-     
-     >
+    }} 
+    
+    
+    >
       <Tab.Screen name="Home" component={HomeStackScreen} 
       options={{
         tabBarIcon: ({color, size}) => (<MaterialIcon name="home" color={color} size={size}/>)
@@ -60,13 +93,25 @@ export default function App() {
         tabBarIcon: ({color, size}) => (<MaterialIcon name="chat" color={color} size={size}/>)
       }}
       />
-      <Tab.Screen name="Connexion" component={Connexion} 
+      <Tab.Screen name="Profile" component={Profile} 
       options={{
         tabBarIcon: ({color, size}) => (<MaterialIcon name="person" color={color} size={size}/>)
       }}
       />
+      <Tab.Screen name="Panier" component={Panier} 
+      options={{
+        tabBarIcon: ({color, size}) => (<MaterialIcon name="shopping-cart" color={color} size={size}/>)
+      }}
+      />
     </Tab.Navigator>
     </NavigationContainer>
+  </>);
+
+}
+export default function App() {
+  return (
+    <Provider store={store}>
+    <AppWrapp/>
     
     </Provider>
   );

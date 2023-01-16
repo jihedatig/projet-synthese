@@ -5,38 +5,14 @@ import MyColors from '../constants/colors'
 import ConnexionModal from '../components/ConnexionModal';
 import { useSelector, useDispatch } from 'react-redux';
 import {affichageActions} from '../store/store'
+import UserProfile from './UserProfile';
+import VisitorPage from './VisitorPage';
 
 export default function Connexion() {
-    
-
-    const[modalVisible, setModalVisible]=useState(false);
-    const[compRender, setCompRender]=useState(false);
-    
-    function dismissProductHandler(){
-        setModalVisible(false)
-    }
-    function connectHandler(comp){
-        
-            if(comp === 'connect'){
-                setCompRender (true)
-            }
-            if(comp === 'register'){
-                setCompRender (false)
-            }
-            setModalVisible(true);
-    }
+    const isAuth = useSelector(state => state.connexion.isConnected);
+   
   return (
-    <>
-    <ConnexionModal modalVisible={modalVisible} dismissModal={dismissProductHandler} render ={compRender}/>
-    <View style={styles.screenBg}>
-    <View style={styles.container}>
-        <Text style={styles.title}>Connexion</Text>
-      <Btn text={'Se connecter'} icon='person' color={MyColors.grey800} tcolor={MyColors.grey400} onPress={connectHandler.bind(this,'connect')}/>
-      <Btn text={"S'inscrire"} icon='edit' color={MyColors.grey800} tcolor={MyColors.grey400} onPress={connectHandler.bind(this,'register')}/>
-      <Btn text={"Mot de passe oublié"} icon='vpn-key' color={MyColors.grey800} tcolor={MyColors.grey400} onPress={connectHandler}/>
-    </View>
-    </View>
-    </>
+    isAuth?<UserProfile/>:<VisitorPage/>
   )
 }
 

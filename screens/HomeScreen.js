@@ -7,13 +7,20 @@ import ProductModal from '../components/ProductModal'
 import { useSelector, useDispatch } from 'react-redux';
 import ProductList from '../components/ProductList'
 import {affichageActions} from '../store/store'
+import { useIsFocused } from '@react-navigation/native';
 
 
 
 export default function HomeScreen() {
+    const dispatch = useDispatch();
+    const affichage = useSelector(state => state.affichage.affichage);
 
-    const affichage = useSelector(state => state.affichage);
+    const isFocused = useIsFocused();
+    useEffect(()=>{
+        isFocused? dispatch(affichageActions.toggleOptions(true)):dispatch(affichageActions.toggleOptions(false));
+    },[isFocused])
     
+  
 
     const[modalVisible, setModalVisible]=useState(false);
     const[procuctView, setProductView] = useState({
