@@ -1,44 +1,62 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, {useState} from 'react'
-import Input from './Input'
+import InputOutils from './InputOutils'
 import MyColors from '../constants/colors'
 import BtnForm from './BtnForm'
 import axios from 'axios'
+import { SelectList } from 'react-native-dropdown-select-list'
 
 export default function AddProduct() {
-    const[registerClient, setRegisterClient] = useState({
-        username: '',
-        password: '',
-        nom: '',
-        prenom: '',
-        telephone: '',
-        addresse: '',
-        courriel: ''
+    const[product, setProduct] = useState({
+        image: '',
+        nomproduit: '',
+        details: '',
+        prix: '',
+        fournisseur: '',
+        idCategorie: ''
     });
+    const [selected, setSelected] = useState("");
+    const data = [
+        {key:'1', value:'Portable'},
+        {key:'2', value:'Tablette'},
+        {key:'3', value:'Cellulaire'}
+    ]
     function inputHandler(inputIdentifier, enteredValue){
-        setRegisterClient((currentValue) =>{
+        setProduct((currentValue) =>{
             return{
                 ...currentValue,
                 [inputIdentifier]: enteredValue
             };
         })
-        console.log(registerClient)
+        console.log(product)
     }
-    function submitForm(){
-        const endpoint = 'https://ggmarket.alwaysdata.net/createClient';
-        axios.post(endpoint, registerClient)
+    async function submitForm(){
+        const newProduct = {
+            image: 'require("../assets/'+product.image+'")',
+            nomproduit: product.nomproduit,
+            details: product.details,
+            prix: parseFloat(product.prix),
+            fournisseur: product.fournisseur,
+            idCategorie: parseInt(selected)
+        }
+        const endpoint = 'https://ggmarket.alwaysdata.net/createProduct';
+        const response = await axios.post(endpoint, newProduct)
+        console.log(response.data)
     }
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>S'inscrire</Text>
-        <Input label={'contacts'} placeholder={'Username'} inputconfig={{onChangeText: inputHandler.bind(this, 'username'), value: registerClient.username}}/>
-        <Input label={'lock'} placeholder={'Mot de passe'} securedField={true} inputconfig={{onChangeText: inputHandler.bind(this, 'password'), value: registerClient.password}}/>
-        <Input label={'edit-attributes'} placeholder={'Nom'} inputconfig={{onChangeText: inputHandler.bind(this, 'nom'), value: registerClient.nom}}/>
-        <Input label={'edit-attributes'} placeholder={'Prenom'} inputconfig={{onChangeText: inputHandler.bind(this, 'prenom'), value: registerClient.prenom}}/>
-        <Input label={'call'} placeholder={'Telephone'} inputconfig={{onChangeText: inputHandler.bind(this, 'telephone'), value: registerClient.telephone}}/>
-        <Input label={'location-pin'} placeholder={'Addresse'} inputconfig={{onChangeText: inputHandler.bind(this, 'addresse'), value: registerClient.addresse}}/>
-        <Input label={'mail'} placeholder={'Courriel'} inputconfig={{onChangeText: inputHandler.bind(this, 'courriel'), value: registerClient.courriel}}/>
-        <BtnForm text={"S'inscrire"} icon='done' onPress={submitForm}/>
+        <Text style={styles.title}>Ajouter un produit</Text>
+        <InputOutils label={'Image: '} placeholder={'Image path'} inputconfig={{onChangeText: inputHandler.bind(this, 'image'), value: product.image}}/>
+        <InputOutils label={'Nom du produit: '} placeholder={'Nom produit'} inputconfig={{onChangeText: inputHandler.bind(this, 'nomproduit'), value: product.nomproduit}}/>
+        <InputOutils label={'Details: '} placeholder={'details'} inputconfig={{onChangeText: inputHandler.bind(this, 'details'), value: product.details}}/>
+        <InputOutils label={'prix: '} placeholder={'$'} inputconfig={{onChangeText: inputHandler.bind(this, 'prix'), value: product.prix}}/>
+        <InputOutils label={'Fournisseur: '} placeholder={'fournisseur'} inputconfig={{onChangeText: inputHandler.bind(this, 'fournisseur'), value: product.fournisseur}}/>
+        <View style={styles.categorie}>
+            <Text style={styles.catlabel}>Categorie : </Text>
+        <SelectList style={styles.catselect} boxStyles={styles.catselect} label="Categories" setSelected={setSelected} data={data}/>
+        </View>
+        
+        <BtnForm text={"Ajouter"} icon='done' onPress={submitForm}/>
     </View>
   )
 }
@@ -54,5 +72,19 @@ const styles = StyleSheet.create({
         marginVertical:20,
         textAlign:'center',
     },
+    categorie:{
+        flexDirection:'row',
+        alignItems:'center',
+        alignContent:'space-around',
+        paddingHorizontal:30,
+    },
+    catlabel:{
+        flex:1,
+        fontSize:12
+    },
+    catselect:{
+        width:210,
+        backgroundColor:'#FFF'
+    }
     
 })
