@@ -30,7 +30,7 @@ export default function OutilsGestion() {
       <BtnOutils text='Modifier Produit' icon={ImgPath.updateProduct} color={MyColors.grey600} onPress={connectHandler.bind(this,'modify')}/>
       <BtnOutils text='Supprimer Produit' icon={ImgPath.deleteProduct} color={MyColors.grey600} onPress={connectHandler.bind(this,'remove')}/>
 
-      {/* text, icon, onPress, color, tcolor */}
+    
     </View>
     </>
   )

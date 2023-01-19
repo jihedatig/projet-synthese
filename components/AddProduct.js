@@ -32,7 +32,7 @@ export default function AddProduct() {
     }
     async function submitForm(){
         const newProduct = {
-            image: 'require("../assets/'+product.image+'")',
+            image: product.image,
             nomproduit: product.nomproduit,
             details: product.details,
             prix: parseFloat(product.prix),

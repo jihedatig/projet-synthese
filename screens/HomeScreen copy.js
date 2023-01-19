@@ -5,21 +5,19 @@ import Product from '../components/Product'
 // import Produits from '../constants/DummyBDtest'
 import ProductModal from '../components/ProductModal'
 import { useSelector, useDispatch } from 'react-redux';
-import ProductList from '../components/ProductList';
-import {affichageActions} from '../store/store';
-import {fetchingIndexesActions} from '../store/store';
+import ProductList from '../components/ProductList'
+import {affichageActions} from '../store/store'
 import { useIsFocused } from '@react-navigation/native';
-import axios from 'axios';
-import InputSearch from '../components/InputSearch';
+import axios from 'axios'
+import InputSearch from '../components/InputSearch'
 
 
 
 
 export default function HomeScreen() {
+    const [currentPage, setCurrentPage] = useState(1);
     
-    const currentPage = useSelector(state => state.indexes.currentPage);
-    const searchPage = useSelector(state => state.indexes.searchPage);
-
+    const [searchPage, setSearchPage] = useState(1);
     const [searchMode, setSearchMode] = useState(false);
     const [recherche, setRecherche] = useState("");
     const [Produits, setProduits] = useState([]);
@@ -74,9 +72,8 @@ export default function HomeScreen() {
 
     useEffect(()=>{
         setProduits([]);
-        
         if (recherche.length === 0){
-            dispatch(fetchingIndexesActions.resetIndex());
+            
             setSearchMode(false);
             fetchProducts();
             console.log("search empty");
@@ -104,9 +101,9 @@ export default function HomeScreen() {
     function loadMoreItems(){
         if(currentPage<8 || searchPage<8){
             if (searchMode){
-                dispatch(fetchingIndexesActions.incrementSearch());
+                setSearchPage (searchPage + 1)
             }else{
-                dispatch(fetchingIndexesActions.incrementCurrent());
+                setCurrentPage(currentPage + 1);
             }
             
         console.log('load more...'); 
@@ -116,8 +113,8 @@ export default function HomeScreen() {
         function resetpage(){
         console.log('Search mode...' + searchPage + " " + recherche);
         setSearchMode(true);
-        dispatch(fetchingIndexesActions.resetIndex());
-        
+        setSearchPage(1);
+        setCurrentPage(1);
         const newProducts = [];
         setProduits(newProducts);
         if (recherche.length === 0){

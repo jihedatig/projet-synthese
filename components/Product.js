@@ -1,15 +1,15 @@
 import { Pressable, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 
-export default function Product({nomProduit, prix, image, onPress, details}) {
- 
+export default function Product({produit, onPress}) {
+  
 
   return (
     <View style={[styles.card, styles.cardContent]}>
-        <Pressable onPress={onPress.bind(this,nomProduit, prix, image, details)} >
-            <Image style={styles.image} source={image}/>
-            <Text>{nomProduit}</Text>
-            <Text>{prix} $</Text>
+        <Pressable style={{justifyContent:'center', alignItems:'center'}} onPress={onPress.bind(this,produit.nomProduit, produit.prix, produit.image, produit.details)} >
+        <Image source = {{uri:produit.image}} style = {{ width: 120, height: 80 }}/>
+            <Text>{produit.nomProduit}</Text>
+            <Text>{produit.prix} $</Text>
         </Pressable>
      
     </View>
@@ -18,8 +18,8 @@ export default function Product({nomProduit, prix, image, onPress, details}) {
 
 const styles = StyleSheet.create({
     image:{
-        maxWidth:100,
-        maxHeight:100,
+        Width:120,
+        Height:80,
         margin:10
     },
     card:{

@@ -2,16 +2,16 @@ import { Pressable, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import MyColors from '../constants/colors'
 
-export default function ProductList({nomProduit, prix, image, onPress, details}) {
+export default function ProductList({produit, onPress}) {
  
 
   return (
     <View style={[styles.card, styles.cardContent]}>
-        <Pressable style={styles.cardInside} onPress={onPress.bind(this,nomProduit, prix, image, details)} >
-            <Image style={styles.image} source={image}/>
+        <Pressable style={styles.cardInside} onPress={onPress.bind(this,produit.nomProduit, produit.prix, produit.image, produit.details)} >
+            <Image source = {{uri:produit.image}} style = {{ width: 120, height: 80 }}/>
             <View>
-                <Text style={styles.title}>{nomProduit}</Text>
-                <Text>{prix} $</Text> 
+                <Text style={styles.title}>{produit.nomProduit}</Text>
+                <Text>{produit.prix} $</Text> 
             </View>
             
         </Pressable>

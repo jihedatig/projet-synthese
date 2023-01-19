@@ -35,13 +35,34 @@ const connexionSlice = createSlice({
     },
     }
 });
+const fetchingIndex = createSlice({
+    name:'indexes',
+    initialState:{currentPage:1, searchPage:1},
+    reducers:{
+      incrementCurrent(state ){
+        if(state.currentPage < 8){
+           state.currentPage = state.currentPage + 1; 
+        }
+      },
+      incrementSearch(state ){
+        if(state.searchPage < 8){
+            state.searchPage = state.searchPage + 1; 
+         }
+    },
+    resetIndex(state ){
+        state.currentPage = 1;
+        state.searchPage = 1;
+    },
+    }
+});
 
 const store = configureStore({
-    reducer:{affichage: affichageSlice.reducer, connexion:connexionSlice.reducer}
+    reducer:{affichage: affichageSlice.reducer, connexion:connexionSlice.reducer, indexes:fetchingIndex.reducer}
 });
 
 
 export const affichageActions = affichageSlice.actions;
 export const connectActions = connexionSlice.actions;
+export const fetchingIndexesActions = fetchingIndex.actions;
 
 export default store;

@@ -10,7 +10,7 @@ import InputSearch from './InputSearch'
 
 export default function UpdateProduct() {
     const[product, setProduct] = useState({
-        Categorie_idCategorie: "",
+        idCategorie: "",
         details: "",
         fournisseur: "",
         idproduit: "",
@@ -45,7 +45,7 @@ export default function UpdateProduct() {
         if (response.data.message === 'produit(s) trouvé(s)'){
             let unproduit = {
                 
-                    Categorie_idCategorie: ""+response.data.data.Categorie_idCategorie,
+                    idCategorie: ""+response.data.data.idCategorie,
                     details: response.data.data.details,
                     fournisseur: response.data.data.fournisseur,
                     idproduit: ""+response.data.data.idproduit,
@@ -64,7 +64,7 @@ export default function UpdateProduct() {
     }
     async function submitForm(){
         const newProduct = {
-            image: 'require("../assets/'+product.image+'")',
+            image: product.image,
             nomproduit: product.nomProduit,
             details: product.details,
             prix: parseFloat(product.prix),
@@ -73,6 +73,7 @@ export default function UpdateProduct() {
         }
         const endpoint = 'https://ggmarket.alwaysdata.net/updateProduct/'+product.idproduit;
         const response = await axios.put(endpoint, newProduct)
+        Alert.alert(response.data.message)
         console.log(response.data)
     }
   return (

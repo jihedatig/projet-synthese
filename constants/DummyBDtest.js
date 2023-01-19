@@ -73,7 +73,7 @@ const Produits = [
 },
 {
     idproduit:9,
-    image: require("../assets/macbook.png"),
+    image: require("../assets/macbook1.png"),
     nomProduit: 'Portable Asus',
     details: 'example de details',
     prix: 950.99,

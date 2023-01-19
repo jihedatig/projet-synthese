@@ -10,7 +10,7 @@ import InputSearch from './InputSearch'
 
 export default function DeleteProduct() {
     const[product, setProduct] = useState({
-        Categorie_idCategorie: "",
+        idCategorie: "",
         details: "",
         fournisseur: "",
         idproduit: "",
@@ -41,7 +41,7 @@ export default function DeleteProduct() {
         if (response.data.message === 'produit(s) trouvé(s)'){
             let unproduit = {
                 
-                    Categorie_idCategorie: ""+response.data.data.Categorie_idCategorie,
+                    idCategorie: ""+response.data.data.Categorie_idCategorie,
                     details: response.data.data.details,
                     fournisseur: response.data.data.fournisseur,
                     idproduit: ""+response.data.data.idproduit,
@@ -65,14 +65,14 @@ export default function DeleteProduct() {
             details: "",
             prix:"",
             fournisseur: "",
-            Categorie_idCategorie: ""
+            idCategorie: ""
         }
         const endpoint = 'https://ggmarket.alwaysdata.net/deleteProduct/'+recherche;
         const response = await axios.delete(endpoint)
         if (response.data.message === 'produit supprimé'){
           let unproduit = {
               
-                  Categorie_idCategorie: "",
+                  idCategorie: "",
                   details: "",
                   fournisseur: "",
                   idproduit: "",

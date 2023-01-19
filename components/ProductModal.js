@@ -17,23 +17,29 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
     animationType='slide'>
     <View style={styles.productModal}>
       <Button title='Fermer' onPress={dismissModal} color='#060'/>
-      <Image style={styles.image} source={product.image}/>
+      <Image  source = {{uri:product.image}} style = {{ width: 350, height: 250 }}/>
       <View style={styles.spacer}>
         <View style={styles.productDetailsContainer}>
           <Text style={styles.titre}>{product.nomProduit}</Text>
           <View style={styles.topcontainer}>
-          <View>
-            <View style={styles.eval}>
-              {[...Array(evaluation)].map((star,index) =>(<MaterialIcon key={'A'+index} name="star" color={MyColors.orange} size={16}/>))}
-              {[...Array(5-evaluation)].map((star,index) =>(<MaterialIcon key={'I'+index} name="star" color={MyColors.orange200} size={16}/>))}
+          <View style={styles.topcontainer}>
+            <View>
+                <View style={styles.eval}>
+                {[...Array(evaluation)].map((star,index) =>(<MaterialIcon key={'A'+index} name="star" color={MyColors.orange} size={16}/>))}
+                {[...Array(5-evaluation)].map((star,index) =>(<MaterialIcon key={'I'+index} name="star" color={MyColors.orange200} size={16}/>))}
+              </View>
+              <Text>{product.prix} $</Text>
             </View>
-            <Text>{product.prix} $</Text>
-          <Text style={styles.details}>{product.details}</Text>
-          </View>
+            
           <Quantity/>
           </View>
+          
+          
+          </View>
+          <Text style={styles.details}>{product.details}</Text>
           <View style={styles.btnContainer}>
         <Btn text={'Ajouter au panier'} icon='shopping-cart' color={MyColors.orange} tcolor='#FFF' onPress={confirmDialogue}/>
+        <Btn text={'Ajouter au favorie'} icon='favorite' color={MyColors.grey650} tcolor='#FFF' onPress={confirmDialogue}/>
       </View>
         </View>
       
@@ -58,6 +64,8 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:10,
     backgroundColor:'#FFF',
+    alignItems:'center',
+    justifyContent:'flex-start'
     
   },
   titre:{
@@ -69,6 +77,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   topcontainer:{
+    flex:1,
     flexDirection:'row',
     justifyContent:'space-between'
   },
