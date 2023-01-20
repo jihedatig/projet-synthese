@@ -7,6 +7,7 @@ const MyColors = {
     orange200: '#F7D7B7',
     orange: '#F7931E',
     green: '#00CC66',
+    red600: '#cc0000',
     
     
 }

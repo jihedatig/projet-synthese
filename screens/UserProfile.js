@@ -12,15 +12,18 @@ export default function UserProfile() {
     function gestionNav(){
         navigation.navigate('outils')
     }
+    function goFavorie(){
+      navigation.navigate('Favorie')
+  }
   return (
     <View>
-      <Text>UserProfile</Text>
+      
 
       
       <View style={styles.btnContainer}>
       {gestion &&<Btn text={'Outils de Gestion'} icon='admin-panel-settings' color={MyColors.grey800} tcolor='#FFF' onPress={gestionNav}/>}
         <Btn text={'Mes Commandes'} icon='history' color={MyColors.grey800} tcolor='#FFF' onPress={gestionNav}/>
-        <Btn text={'Favories'} icon='favorite' color={MyColors.grey800} tcolor='#FFF' onPress={gestionNav}/>
+        <Btn text={'Favories'} icon='favorite' color={MyColors.grey800} tcolor='#FFF' onPress={goFavorie}/>
         <Btn text={'info'} icon='person' color={MyColors.grey800} tcolor='#FFF' onPress={gestionNav}/>
       </View>
       
@@ -33,6 +36,7 @@ const styles = StyleSheet.create({
     btnContainer:{
         flexDirection:'column',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        marginTop:25,
     }
 })

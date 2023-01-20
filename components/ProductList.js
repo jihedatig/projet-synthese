@@ -7,7 +7,7 @@ export default function ProductList({produit, onPress}) {
 
   return (
     <View style={[styles.card, styles.cardContent]}>
-        <Pressable style={styles.cardInside} onPress={onPress.bind(this,produit.nomProduit, produit.prix, produit.image, produit.details)} >
+        <Pressable style={styles.cardInside} onPress={onPress.bind(this,produit)} >
             <Image source = {{uri:produit.image}} style = {{ width: 120, height: 80 }}/>
             <View>
                 <Text style={styles.title}>{produit.nomProduit}</Text>

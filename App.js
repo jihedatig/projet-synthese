@@ -20,6 +20,7 @@ import Connexion from './screens/Connexion';
 import UserProfile from './screens/UserProfile';
 import Panier from './screens/Panier';
 import OutilsGestion from './screens/OutilsGestion';
+import Favories from './screens/Favories';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,6 +47,11 @@ function Profile() {
           headerShown:true
         }}
         />}
+        <Stack.Screen name='Favorie' component={Favories}
+        options={{
+          headerShown:true
+        }}
+        />
       </Stack.Navigator>
   );
 }

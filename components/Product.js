@@ -6,7 +6,7 @@ export default function Product({produit, onPress}) {
 
   return (
     <View style={[styles.card, styles.cardContent]}>
-        <Pressable style={{justifyContent:'center', alignItems:'center'}} onPress={onPress.bind(this,produit.nomProduit, produit.prix, produit.image, produit.details)} >
+        <Pressable style={{justifyContent:'center', alignItems:'center'}} onPress={onPress.bind(this,produit)} >
         <Image source = {{uri:produit.image}} style = {{ width: 120, height: 80 }}/>
             <Text>{produit.nomProduit}</Text>
             <Text>{produit.prix} $</Text>

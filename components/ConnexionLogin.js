@@ -37,13 +37,10 @@ export default function ConnexionLogin() {
         if(response.data.message === 'Vous êtes connecté'){
             const endpoint2 = 'https://ggmarket.alwaysdata.net/getRole';
             const getRole = await axios.post(endpoint2, {idUtilisateur: response.data.data.idUtilisateur});
+            dispatch(connectActions.Authenticated(response.data.data.idUtilisateur))
             if(getRole.data.message === 'isAdmin'){
                 dispatch(connectActions.roleAdmin())
-                dispatch(connectActions.Authenticated())
                 Alert.alert('Bonjour, ' + getRole.data.data['prenom']);
-
-            }else{
-                dispatch(connectActions.Authenticated())
             }
             
         }else{

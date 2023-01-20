@@ -1,14 +1,60 @@
 import { StyleSheet, Text, View, Image, Modal, Button, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MyColors from '../constants/colors'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Quantity from './Quantity';
 import Btn from './Btn';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function ProductModal({modalVisible, dismissModal, product}) {
   const [evaluation, setEvaluation] = useState(2);
+  const [favorie, setFavorie] = useState(false);
+  const isFocused = useIsFocused();
+  const isConnected = useSelector(state => state.connexion.isConnected);
+  const userId = useSelector(state => state.connexion.userId);
   function confirmDialogue(){
     Alert.alert('Produit: '+ product.nomProduit +' ajouté au panier')
+  }
+  useEffect(()=>{
+    checkFavorite();
+    
+  },[isFocused, product]);
+  async function checkFavorite(){
+    console.log('product modal' + isFocused)
+    if(isFocused && userId !==0 && typeof(product.idproduit) != "undefined"){
+     const response = await axios.get(`https://ggmarket.alwaysdata.net/istFavorie/${product.idproduit}/${userId}`);
+      console.log(response.data) 
+      if(response.data.message === "favorie trouvé"){
+        setFavorie(true);
+      }else{
+        setFavorie(false);
+      }
+    }else{
+      console.log('not connected')
+    }
+    
+  }
+  async function ajouterFavorie(){
+    if (isConnected && userId !==0 ){
+      const endpoint = 'https://ggmarket.alwaysdata.net/addFavorite';
+      const favPayload = {idproduit: product.idproduit, idClient: userId}
+      const response = await axios.post(endpoint, favPayload)
+      console.log(response.data)
+      setFavorie(true);
+      Alert.alert(`- ${product.nomProduit} - ajouté au favorie!`)
+    }else{
+      Alert.alert('Veuillez vous connecter')
+    }
+   
+
+  }
+  async function deleteFavorie(){
+    const response = await axios.delete(`https://ggmarket.alwaysdata.net/deleteFavorie/${product.idproduit}/${userId}`);
+    console.log(response.data.message);
+    setFavorie(false);
+
   }
  
   return (
@@ -39,7 +85,7 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
           <Text style={styles.details}>{product.details}</Text>
           <View style={styles.btnContainer}>
         <Btn text={'Ajouter au panier'} icon='shopping-cart' color={MyColors.orange} tcolor='#FFF' onPress={confirmDialogue}/>
-        <Btn text={'Ajouter au favorie'} icon='favorite' color={MyColors.grey650} tcolor='#FFF' onPress={confirmDialogue}/>
+        {favorie?<Btn text={'Retirer de favorie'} icon='favorite' color={MyColors.red600} tcolor='#FFF' onPress={deleteFavorie}/>:<Btn text={'Ajouter au favorie'} icon='favorite' color={MyColors.grey650} tcolor='#FFF' onPress={ajouterFavorie}/>}
       </View>
         </View>
       

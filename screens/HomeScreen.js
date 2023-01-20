@@ -86,14 +86,11 @@ export default function HomeScreen() {
 
     const[modalVisible, setModalVisible]=useState(false);
     const[procuctView, setProductView] = useState({
-        nomProduit:'',
-        prix:'',
-        image:'',
-        details:''
-    });
-    function viewProductHandler(nomProduit, prix, image, details){
         
-        setProductView({nomProduit:nomProduit, prix:prix, image:image, details:details});
+    });
+    function viewProductHandler(produit){
+        
+        setProductView({...produit});
             setModalVisible(true);
             console.log(procuctView);
     }

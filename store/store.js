@@ -21,10 +21,11 @@ const affichageSlice = createSlice({
 });
 const connexionSlice = createSlice({
     name:'connexion',
-    initialState:{isConnected:false, isAdmin:false},
+    initialState:{isConnected:false, isAdmin:false, userId:0},
     reducers:{
-      Authenticated(state ){
+      Authenticated(state, action ){
           state.isConnected = true;
+          state.userId = action.payload;
       },
       roleAdmin(state ){
         state.isAdmin = true;
