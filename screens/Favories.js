@@ -33,7 +33,7 @@ export default function Favories() {
         
     },[isFocused]);
     async function fetchFavories(){
-        const onlineFavorie = await axios.get('https://ggmarket.alwaysdata.net/getFavories/2');
+        const onlineFavorie = await axios.get('https://ggmarket.alwaysdata.net/getFavories/'+userId);
         setProduits(onlineFavorie.data.data);
         console.log(onlineFavorie.data.data);
     }

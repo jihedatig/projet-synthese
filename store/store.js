@@ -84,7 +84,7 @@ const panierSlice = createSlice({
         console.log('from redux: '+ JSON.stringify(state)) 
       },
       emptyCart(state){
-        state =[]; 
+        state.splice(0,state.length) 
       },
     
       

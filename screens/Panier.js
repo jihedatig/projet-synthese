@@ -16,6 +16,7 @@ export default function Panier() {
   const dispatch = useDispatch();
   let affichePanier = useSelector(state => state.panier);
   const isConnected = useSelector(state => state.connexion.isConnected);
+  const userId = useSelector(state => state.connexion.userId);
   const screenpanier = useIsFocused();
   const[sstotale,setSStotale] = useState(0.00);
   const[tps, setTps] = useState(0.00);
@@ -28,11 +29,7 @@ export default function Panier() {
   var dateCommande = year + '-' + month + '-' + day;
   
   const navigation = useNavigation();
-  useEffect(()=>{
-    
-    testpanier();
-    //sstotale = dispatch(panierActions.getSStotale())
-  },[screenpanier]);
+  
   useEffect(()=>{
      var solde =0
     if (affichePanier.length>0){
@@ -52,16 +49,14 @@ export default function Panier() {
       }
   },[affichePanier,affichePanier.length]);
 
-  async function testpanier(){
-    const dummy = {
-      nomProduit: 'whatever',
-      prix: 550
-    }
-    const response = await axios.post('https://ggmarket.alwaysdata.net/testpanier/999', dummy)
-  }
-  function payNow(){
+  
+  async function payNow(){
     if(isConnected){
-      navigation.navigate('pay', {total:grandTotal})
+      const response = await axios.post('https://ggmarket.alwaysdata.net/order/'+userId+'/'+ dateCommande , affichePanier);
+      console.log(response.data.message);
+      affichePanier.length = 0;
+      navigation.navigate('pay', {total:grandTotal});
+      
     }else{
       Alert.alert('Veuillez vous connecter')
     }

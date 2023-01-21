@@ -84,7 +84,7 @@ export default function UpdateProduct() {
    
         
         <InputOutils label={'Image: '} placeholder={'Image path'} inputconfig={{onChangeText: inputHandler.bind(this, 'image'), value: product.image}}/>
-        <InputOutils label={'Nom du produit: '} placeholder={'Nom produit'} inputconfig={{onChangeText: inputHandler.bind(this, 'nomproduit'), value: product.nomProduit}}/>
+        <InputOutils label={'Nom du produit: '} placeholder={'Nom produit'} inputconfig={{onChangeText: inputHandler.bind(this, 'nomProduit'), value: product.nomProduit}}/>
         <InputOutils label={'Details: '} placeholder={'details'} inputconfig={{onChangeText: inputHandler.bind(this, 'details'), value: product.details}}/>
         <InputOutils label={'prix: '} placeholder={'$'} inputconfig={{onChangeText: inputHandler.bind(this, 'prix'), value: product.prix}}/>
         <InputOutils label={'Fournisseur: '} placeholder={'fournisseur'} inputconfig={{onChangeText: inputHandler.bind(this, 'fournisseur'), value: product.fournisseur}}/>
