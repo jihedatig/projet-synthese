@@ -4,9 +4,10 @@ import MyColors from '../constants/colors'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Quantity from './Quantity';
 import Btn from './Btn';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useIsFocused } from '@react-navigation/native';
+import {panierActions} from '../store/store';
 
 export default function ProductModal({modalVisible, dismissModal, product}) {
   const [evaluation, setEvaluation] = useState(2);
@@ -14,9 +15,71 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
   const isFocused = useIsFocused();
   const isConnected = useSelector(state => state.connexion.isConnected);
   const userId = useSelector(state => state.connexion.userId);
-  function confirmDialogue(){
-    Alert.alert('Produit: '+ product.nomProduit +' ajouté au panier')
+  const dispatch = useDispatch();
+  const [quantity,setQuantity]= useState(1);
+  const [inFocusProduct, setInFocusProduct]= useState(
+    {
+      idproduit: product.idproduit,
+      nomProduit: product.nomProduit,
+      prix: product.prix,
+      fournisseur: product.fournisseur,
+      idCategorie: product.idCategorie,
+      details: product.details, 
+      image: product.image,
+      qty: 1
+    }
+  )
+  useEffect(()=>{
+    setInFocusProduct(
+      {
+        idproduit: product.idproduit,
+        nomProduit: product.nomProduit,
+        prix: product.prix,
+        fournisseur: product.fournisseur,
+        idCategorie: product.idCategorie,
+        details: product.details, 
+        image: product.image,
+        qty: 1
+      }
+    );
+
+    console.log('from useeffect : '+inFocusProduct);
+  },[product])
+  
+
+  useEffect(()=>{
+    setQuantity(inFocusProduct.qty);
+
+    console.log('from useeffect : '+inFocusProduct);
+  },[inFocusProduct])
+  
+  
+  
+  
+  function decreaseQty(){
+    if (inFocusProduct.qty>1){
+     
+      let currentQt = inFocusProduct;
+    currentQt.qty--;
+      
+      setInFocusProduct( currentQt );
+      setQuantity(inFocusProduct.qty);
+      console.log(inFocusProduct);
+    }
+    
   }
+  function incrementQty(){
+    
+    let currentQt = inFocusProduct;
+    currentQt.qty++;
+    
+    setInFocusProduct(currentQt );
+    setQuantity(inFocusProduct.qty);
+    console.log(inFocusProduct);
+  }
+
+
+
   useEffect(()=>{
     checkFavorite();
     
@@ -56,6 +119,10 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
     setFavorie(false);
 
   }
+  function ajouterPanier(){
+    dispatch(panierActions.addToCart(inFocusProduct))
+    Alert.alert('Produit: '+ inFocusProduct.nomProduit +' ajouté au panier')
+  }
  
   return (
     <Modal 
@@ -77,14 +144,14 @@ export default function ProductModal({modalVisible, dismissModal, product}) {
               <Text>{product.prix} $</Text>
             </View>
             
-          <Quantity/>
+          <Quantity inc={incrementQty} dec={decreaseQty} qty={quantity}/>
           </View>
           
           
           </View>
           <Text style={styles.details}>{product.details}</Text>
           <View style={styles.btnContainer}>
-        <Btn text={'Ajouter au panier'} icon='shopping-cart' color={MyColors.orange} tcolor='#FFF' onPress={confirmDialogue}/>
+        <Btn text={'Ajouter au panier'} icon='shopping-cart' color={MyColors.orange} tcolor='#FFF' onPress={ajouterPanier}/>
         {favorie?<Btn text={'Retirer de favorie'} icon='favorite' color={MyColors.red600} tcolor='#FFF' onPress={deleteFavorie}/>:<Btn text={'Ajouter au favorie'} icon='favorite' color={MyColors.grey650} tcolor='#FFF' onPress={ajouterFavorie}/>}
       </View>
         </View>
@@ -103,10 +170,12 @@ const styles = StyleSheet.create({
   productModal:{
     flex:1,
     paddingTop:40,
-    backgroundColor:'#ccc'
+    backgroundColor:'#ccc',
+    alignItems:'center'
   },
   productDetailsContainer:{
     flex:1,
+    width:'100%',
     marginTop:20,
     padding:10,
     backgroundColor:'#FFF',

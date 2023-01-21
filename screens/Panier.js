@@ -1,84 +1,98 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Quantity from '../components/Quantity'
 import Product from '../components/Product'
 import PanierBtn from '../components/PanierBtn'
+import { useIsFocused } from '@react-navigation/native'
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {panierActions} from '../store/store';
+import ProductPanier from '../components/ProductPanier'
+import MyColors from '../constants/colors'
+import BtnSuppPanier from '../components/BtnSuppPanier'
 
 export default function Panier() {
+  const dispatch = useDispatch();
+  let affichePanier = useSelector(state => state.panier);
+  const screenpanier = useIsFocused();
+  const[sstotale,setSStotale] = useState(0.00);
+  const[tps, setTps] = useState(0.00);
+  const[tvq, setTvq] = useState(0.00);
+  const[grandTotal, setGrandTotal] = useState(0.00);
+  var dateToday = new Date();
+  var month = dateToday.getUTCMonth() + 1;
+  var day = dateToday.getUTCDate();
+  var year = dateToday.getUTCFullYear();
+  var dateCommande = year + '-' + month + '-' + day;
+  
+
+  useEffect(()=>{
+    
+    testpanier();
+    //sstotale = dispatch(panierActions.getSStotale())
+  },[screenpanier]);
+  useEffect(()=>{
+     var solde =0
+    if (affichePanier.length>0){
+         for (var i=0;i<affichePanier.length;i++){
+          solde += (affichePanier[i].prix * affichePanier[i].qty)
+          
+          } 
+          var newtps = parseFloat((solde * 0.05).toFixed(2));
+            var newtvq = parseFloat((solde * 0.09975).toFixed(2));
+          setSStotale(solde);
+          setTps(newtps) ;
+          setTvq(newtvq);
+          var newgrandTotal = solde + newtps + newtvq
+          setGrandTotal(parseFloat(newgrandTotal.toFixed(2)))
+          console.log("sous total changed: " + sstotale)
+          console.log('from panier :'+ JSON.stringify(affichePanier))
+      }
+  },[affichePanier,affichePanier.length]);
+
+  async function testpanier(){
+    const dummy = {
+      nomProduit: 'whatever',
+      prix: 550
+    }
+    const response = await axios.post('https://ggmarket.alwaysdata.net/testpanier/999', dummy)
+  }
 
 
-  function viewProductHandler(nomProduit, prix, image, details){
-        
-    setProductView({nomProduit:nomProduit, prix:prix, image:image, details:details});
-        setModalVisible(true);
-        console.log(procuctView);
-}
+function viewProductHandler(){
 
-  const produit =  {
-    idproduit: 1,
-    image: require("../assets/produit.png"),
-    nomProduit: 'Portable HP',
-    details: 'example de details',
-    prix: 500.99,
-    fournisseur: 'HP',
-    idSousCategorie: 1,
 }
 
   return (
 
-    <View>
-
       <View style={styles.header} >
-      <Text style={styles.titre}>Panier d'achat</Text>
-      </View>
-
-      <View style={styles.sousTitreRow}   >
-
-      <Text style={styles.titre}>Produit</Text>
-      <Text style={styles.titre}>Prix unitaire</Text>
-      <Text style={styles.titre}>Total</Text>
-
-      </View>
-
-
-      <View style={styles.produitsRow}  >
-
-
-        <Product nomProduit={produit.nomProduit} image={produit.image} onPress={viewProductHandler.bind(produit)}/>
+        {affichePanier.length>0?
+        <>
+        <View style={styles.cartheader}>
+          <View style={styles.leftHcart}>
+            <MaterialIcon name="shopping-cart" color={MyColors.orange} size={30} />
+          </View>
+          <View style={styles.centerHcart}>
+            <Text style={styles.ctText}>Sous-totale: {sstotale} $</Text>
+            <Text style={styles.ctText}>TPS: {tps}$</Text>
+            <Text style={styles.ctText}>TVQ: {tvq}$</Text>
+          </View>
+          <View style={styles.rightHcart}>
+            <Text style={styles.ctText}>Grand totale:</Text>
+            <Text style={styles.ctText}>{grandTotal}$</Text>
+            <BtnSuppPanier text={'Payez'} icon='navigate-next' color={MyColors.orange} tcolor='#FFF' />
+          </View>
+          
+        </View>
       
-
-        <Text style={styles.titre}>300$</Text>
-        <Text style={styles.titre}>Total</Text>
-     
-
-      </View>
-
-      <View style={styles.produitsRow}  >
-      <Quantity/>
-      <PanierBtn icon='delete' text={'Supprimer'}  />
-      <PanierBtn  text={'Ajouter au favories'}  />
-  
-
-      </View  >
       
-
-      <View style={styles.produitsRow}  >
-
-      <PanierBtn  text={'passer commande'}  />
-
-      <View style={styles.produitsColum}  >
-
-      <Text style={styles.titre}>TPS: 00$</Text>
-      <Text style={styles.titre}>TVQ: 00$</Text>
-      <Text style={styles.titre}>Grand total: 00$</Text>
-
+      <FlatList style={styles.rv} key={'P'}  contentContainerStyle={{alignItems:'center',width:'100%',paddingBottom:64}}  data={affichePanier} renderItem={(itemData) => <ProductPanier produit={itemData.item} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'P'+item.idproduit+index;}} />
+      </>
+      :<Text style={styles.titre}>Aucun element dans le panier</Text>}
       </View>
 
-      </View>
-
-
-    </View>
-
+      
 
   )
 }
@@ -91,40 +105,38 @@ const styles = StyleSheet.create({
     alignItems:'center'
 },
 header:{
+  flex:1,
   paddingTop:5,
   paddingBottom:10,
-  borderBottomColor:'#cccccc',
-  borderBottomWidth: 2,
   justifyContent:'center',
   alignItems:'center'
 },
-sousTitreRow:{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  paddingTop:10,
-  padding:5,
-  borderBottomColor:'#cccccc',
-  borderBottomWidth: 3
-},
-
-produitsRow:{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  paddingTop:10,
-  padding:5,
-  borderBottomColor:'#cccccc',
-  borderBottomWidth: 3
-},
-produitsColum:{
-  flexDirection: 'colum',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+rv:{
+  flex:1,
   
+ 
 },
-image:{
-  maxWidth:50,
-  maxHeight:50
+cartheader:{
+  flexDirection:'row',
+  justifyContent:'space-between',
+  height:90,
+  width:'100%',
+  paddingVertical:10,
+  paddingHorizontal:15,
+},
+leftHcart:{
+  width:60,
+},
+centerHcart:{
+
+},
+rightHcart:{
+
+},
+ctText:{
+  fontSize:12,
+  color:MyColors.grey800,
+  marginBottom:4,
+  textAlign:'center'
 },
 })

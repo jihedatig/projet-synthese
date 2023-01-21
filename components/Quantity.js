@@ -3,26 +3,26 @@ import React, { useState } from 'react'
 import MyColors from '../constants/colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Quantity() {
-    const [productQt, setProductQt] = useState(1);
-    function removeHandler(){
-      if (productQt>0){
-        let currentQt = productQt -1;
-        setProductQt(currentQt);
-      }
+export default function Quantity({inc, dec, qty}) {
+    // const [productQt, setProductQt] = useState(1);
+    // function removeHandler(){
+    //   if (productQt>0){
+    //     let currentQt = productQt -1;
+    //     setProductQt(currentQt);
+    //   }
       
-    }
-    function addHandler(){
-      let currentQt = productQt + 1;
-      setProductQt(currentQt);
-    }
+    // }
+    // function addHandler(){
+    //   let currentQt = productQt + 1;
+    //   setProductQt(currentQt);
+    // }
   return (
     <View style={styles.container}>
-      <Pressable onPress={removeHandler}>
+      <Pressable onPress={dec}>
       <View style={styles.btn}><MaterialIcon name='remove' color='#FFF' size={18}/></View>
       </Pressable>
-      <View><Text style={styles.sign}>{productQt}</Text></View>
-      <Pressable onPress={addHandler}>
+      <View><Text style={styles.sign}>{qty}</Text></View>
+      <Pressable onPress={inc}>
       <View style={styles.btn}><MaterialIcon name='add' color='#FFF' size={18}/></View>
       </Pressable>
     </View>

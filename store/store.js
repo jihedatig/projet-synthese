@@ -56,14 +56,51 @@ const fetchingIndex = createSlice({
     },
     }
 });
+const panierSlice = createSlice({
+    name:'panier',
+    initialState:[],
+    reducers:{
+      panierExiste(state ){
+        return state.length;
+      },
+      addToCart(state, action){
+        state.push(action.payload)
+      },
+      incrementQty(state, action){
+        var foundIndex = state.findIndex(x=> x.idproduit == action.payload);
+        state[foundIndex].qty++
+        console.log('from redux: '+ JSON.stringify(state)) 
+      },
+      decreaseQty(state, action){
+        var foundIndex = state.findIndex(x=> x.idproduit == action.payload);
+        state[foundIndex].qty--
+        console.log('from redux: '+ JSON.stringify(state)) 
+      },
+      removeProduct(state, action){
+        
+        //   var myArray =  state.filter(function(product) {
+        //     return product.idproduit !== action.payload;
+        //   });
+        //   state = myArray;
+        var foundIndex = state.findIndex(x=> x.idproduit == action.payload);
+        state.splice(foundIndex,1)
+          
+        console.log('from redux: '+ JSON.stringify(state)) 
+      },
+    
+      
+      
+    }
+});
 
 const store = configureStore({
-    reducer:{affichage: affichageSlice.reducer, connexion:connexionSlice.reducer, indexes:fetchingIndex.reducer}
+    reducer:{affichage: affichageSlice.reducer, connexion:connexionSlice.reducer, indexes:fetchingIndex.reducer, panier:panierSlice.reducer}
 });
 
 
 export const affichageActions = affichageSlice.actions;
 export const connectActions = connexionSlice.actions;
 export const fetchingIndexesActions = fetchingIndex.actions;
+export const panierActions = panierSlice.actions;
 
 export default store;

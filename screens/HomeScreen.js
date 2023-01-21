@@ -144,7 +144,7 @@ export default function HomeScreen() {
         {/* <View><TextInput style={styles.input} placeholder='Recherche' autoCapitalize='none' onChangeText={rechercher} value={recherche} onFocus={resetpage}/></View> */}
         <InputSearch style={{flex:1}} label={'Recherche : '} placeholder={'Recherche'} inputconfig={{onChangeText:rechercher, value: recherche}} onPress={resetpage}/>
        { affichage ?
-    <FlatList key={'L'}  contentContainerStyle={{justifyContent:'center',width:'100%'}} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList produit={itemData.item} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit+index;}} ListFooterComponent={RenderLoad} onEndReached={loadMoreItems} onEndReachedThreshold={0}/>
+    <FlatList key={'L'}  contentContainerStyle={{alignItems:'center',width:'100%'}} style={styles.productsList} data={Produits} renderItem={(itemData) => <ProductList produit={itemData.item} onPress={viewProductHandler}/>} numColumns={1} keyExtractor={(item, index) =>{return 'L'+item.idproduit+index;}} ListFooterComponent={RenderLoad} onEndReached={loadMoreItems} onEndReachedThreshold={0}/>
             :
     <FlatList key={'G'}  contentContainerStyle={{justifyContent:'center', alignItems:'center',}} style={styles.productsList} data={Produits} renderItem={(itemData) => <Product produit={itemData.item} onPress={viewProductHandler}/>} numColumns={2} keyExtractor={(item, index) =>{return 'G'+item.idproduit+index;}} ListFooterComponent={RenderLoad} onEndReached={loadMoreItems} onEndReachedThreshold={0}/>
         }
