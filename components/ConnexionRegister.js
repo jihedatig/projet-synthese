@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React, {useState} from 'react'
 import Input from './Input'
 import MyColors from '../constants/colors'
 import BtnForm from './BtnForm'
 import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
 
 export default function ConnexionRegister() {
+    
+    const navigation = useNavigation();
     const[registerClient, setRegisterClient] = useState({
         username: '',
         password: '',
@@ -26,7 +29,9 @@ export default function ConnexionRegister() {
     }
     function submitForm(){
         const endpoint = 'https://ggmarket.alwaysdata.net/createClient';
-        axios.post(endpoint, registerClient)
+        axios.post(endpoint, registerClient);
+        Alert.alert('Binvenue chez GGMarket!');
+        navigation.navigate('Profile');
     }
   return (
     <View style={styles.container}>

@@ -21,9 +21,12 @@ import UserProfile from './screens/UserProfile';
 import Panier from './screens/Panier';
 import OutilsGestion from './screens/OutilsGestion';
 import Favories from './screens/Favories';
+import Payment from './screens/Payment';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
 
 function Profile() {
 
@@ -52,6 +55,27 @@ function Profile() {
           headerShown:true
         }}
         />
+      </Stack.Navigator>
+  );
+}
+function Shopping() {
+
+ 
+  
+  
+  return (
+    <Stack.Navigator>
+        <Stack.Screen name='Cart' component={Panier}
+        options={{
+          headerShown:false
+        }}
+        />
+        <Stack.Screen name='pay' component={Payment}
+        options={{
+          headerShown:true
+        }}
+        />
+        
       </Stack.Navigator>
   );
 }
@@ -104,7 +128,7 @@ function AppWrapp(){
         tabBarIcon: ({color, size}) => (<MaterialIcon name="person" color={color} size={size}/>)
       }}
       />
-      <Tab.Screen name="Panier" component={Panier} 
+      <Tab.Screen name="Panier" component={Shopping} 
       options={{
         tabBarIcon: ({color, size}) => (<MaterialIcon name="shopping-cart" color={color} size={size}/>)
       }}

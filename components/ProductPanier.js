@@ -35,7 +35,7 @@ export default function ProductPanier({produit}) {
             <Text style={styles.title}>{produit.nomProduit}</Text>
             <Text style={styles.prix}>{produit.prix} $</Text>
             <Text >Vendu par : {produit.fournisseur}</Text>
-            <Text style={styles.sstotale}>sous-totale: {produit.prix}</Text>
+            <Text style={styles.sstotale}>sous-totale: {produit.prix * produit.qty}</Text>
             <BtnSuppPanier text={'Supprimer'} icon='delete-forever' color={MyColors.red600} tcolor='#FFF' onPress={removeProduit}/>
         </View>
         

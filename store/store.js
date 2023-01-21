@@ -78,14 +78,13 @@ const panierSlice = createSlice({
       },
       removeProduct(state, action){
         
-        //   var myArray =  state.filter(function(product) {
-        //     return product.idproduit !== action.payload;
-        //   });
-        //   state = myArray;
         var foundIndex = state.findIndex(x=> x.idproduit == action.payload);
         state.splice(foundIndex,1)
           
         console.log('from redux: '+ JSON.stringify(state)) 
+      },
+      emptyCart(state){
+        state =[]; 
       },
     
       

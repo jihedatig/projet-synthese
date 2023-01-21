@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Quantity from '../components/Quantity'
 import Product from '../components/Product'
 import PanierBtn from '../components/PanierBtn'
-import { useIsFocused } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -15,6 +15,7 @@ import BtnSuppPanier from '../components/BtnSuppPanier'
 export default function Panier() {
   const dispatch = useDispatch();
   let affichePanier = useSelector(state => state.panier);
+  const isConnected = useSelector(state => state.connexion.isConnected);
   const screenpanier = useIsFocused();
   const[sstotale,setSStotale] = useState(0.00);
   const[tps, setTps] = useState(0.00);
@@ -26,7 +27,7 @@ export default function Panier() {
   var year = dateToday.getUTCFullYear();
   var dateCommande = year + '-' + month + '-' + day;
   
-
+  const navigation = useNavigation();
   useEffect(()=>{
     
     testpanier();
@@ -58,6 +59,14 @@ export default function Panier() {
     }
     const response = await axios.post('https://ggmarket.alwaysdata.net/testpanier/999', dummy)
   }
+  function payNow(){
+    if(isConnected){
+      navigation.navigate('pay', {total:grandTotal})
+    }else{
+      Alert.alert('Veuillez vous connecter')
+    }
+    
+  }
 
 
 function viewProductHandler(){
@@ -81,7 +90,7 @@ function viewProductHandler(){
           <View style={styles.rightHcart}>
             <Text style={styles.ctText}>Grand totale:</Text>
             <Text style={styles.ctText}>{grandTotal}$</Text>
-            <BtnSuppPanier text={'Payez'} icon='navigate-next' color={MyColors.orange} tcolor='#FFF' />
+            <BtnSuppPanier text={'Payez'} icon='navigate-next' color={MyColors.orange} tcolor='#FFF' onPress={payNow}/>
           </View>
           
         </View>
